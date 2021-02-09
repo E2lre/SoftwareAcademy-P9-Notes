@@ -5,9 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface NoteDao extends MongoRepository<Note, Long> {
+public interface NoteDao extends MongoRepository<Note, String> {
 
-    Note findNoteById (Long id);
+    Note findNoteById (String id);
     List<Note> findNoteByPatientId (Long patientId);
 
 }

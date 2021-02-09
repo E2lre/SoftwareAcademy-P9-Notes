@@ -4,13 +4,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.GeneratedValue;
 import java.util.Date;
 
 @Document(collection = "Note")
 public class Note {
 
     @Id
-    private Long id;
+    @GeneratedValue
+    private String id;
 
     @Field(value = "Patient_Id")
     private Long patientId;
@@ -23,18 +25,18 @@ public class Note {
 
     public Note() {
         }
-    public Note(Long id, Long patientId, String textNote, Date dateNote) {
+    public Note(String id, Long patientId, String textNote, Date dateNote) {
         this.id = id;
         this.patientId = patientId;
         this.textNote = textNote;
         this.dateNote = dateNote;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
