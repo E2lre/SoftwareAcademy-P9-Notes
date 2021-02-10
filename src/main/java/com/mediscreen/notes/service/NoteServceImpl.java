@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,10 +36,12 @@ public class NoteServceImpl implements NoteService {
     public Note addWithPatientId(Note note) {
         //TODO Ajouter les controles
         Note noteToInsert = new Note();
-        noteToInsert.setDateNote(note.getDateNote());
+        //noteToInsert.setDateNote(note.getDateNote()); //DateNote is current day
+        noteToInsert.setDateNote(LocalDate.now()); // Date is the corrent day, input value is ignored
         noteToInsert.setPatientId(note.getPatientId());
         noteToInsert.setTextNote(note.getTextNote());
-        return noteDao.insert(note);
+        //return noteDao.insert(note);
+        return noteDao.insert(noteToInsert);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class NoteServceImpl implements NoteService {
         boolean result = false;
         Note resultNote = noteDao.findNoteById(note.getId());
         if ((resultNote != null) && (resultNote.getPatientId().equals(note.getPatientId())))  {
+            note.setDateNote(LocalDate.now()); // Date is the current day, input value is ignored
             noteDao.save(note);
             result = true;
             logger.info("Note id " + note.getId() + " is updated");

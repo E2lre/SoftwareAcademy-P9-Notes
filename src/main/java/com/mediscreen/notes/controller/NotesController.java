@@ -21,7 +21,7 @@ public class NotesController {
     @Autowired
     private NoteService noteService;
     /*---------------------------  GET all notes -----------------------------*/
-    @GetMapping(value = "notes")
+    @GetMapping(value = "patHistories")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getAllNotes()  {
         logger.info("getAllNotes start/finish");
@@ -29,7 +29,7 @@ public class NotesController {
     }
 
     /*---------------------------  GET note by id note -----------------------------*/
-    @GetMapping(value = "note/{id}")
+    @GetMapping(value = "patHistory/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Note getNoteById(@PathVariable String id) throws NoteIdNotFoundException {
         logger.info("getNoteById start");
@@ -46,7 +46,7 @@ public class NotesController {
     }
 
     /*---------------------------  GET note by patient id -----------------------------*/
-    @GetMapping(value = "patientnotes/{patientId}")
+    @GetMapping(value = "patientpatHistories/{patientId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNoteByPatientId(@PathVariable Long patientId) throws NoteIdNotFoundException {
         logger.info("getNoteByPatientId start");
@@ -63,7 +63,7 @@ public class NotesController {
     }
 
     /*---------------------------  POST note -----------------------------*/
-    @PostMapping(value = "note")
+    @PostMapping(value = "patHistory/add")
     @ResponseStatus(HttpStatus.CREATED)
     public String addNote(@RequestBody Note note) throws NoteCanNotbeAddedException {
         String finalResult = null;
@@ -88,7 +88,7 @@ public class NotesController {
     }
 
     /*---------------------------  PUT note -----------------------------*/
-    @PutMapping(value = "note")
+    @PutMapping(value = "patHistory")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public String saveNote(@RequestBody Note note) throws NoteCanNotBeSavedException {
         String finalResult = null;
@@ -113,7 +113,7 @@ public class NotesController {
     }
 
     /*---------------------------  DELETE note -----------------------------*/
-    @DeleteMapping(value = "note")
+    @DeleteMapping(value = "patHistory")
     @ResponseStatus(HttpStatus.OK)
     public String deleteNote(@RequestBody Note note) throws NoteCanNotBeDeletedException {
         String finalResult = null;

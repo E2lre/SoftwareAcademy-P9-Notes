@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.GeneratedValue;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document(collection = "Note")
@@ -21,11 +22,11 @@ public class Note {
     private String textNote;
 
     @Field(value = "Date_Note")
-    private Date dateNote;
+    private LocalDate dateNote;
 
     public Note() {
         }
-    public Note(String id, Long patientId, String textNote, Date dateNote) {
+    public Note(String id, Long patientId, String textNote, LocalDate dateNote) {
         this.id = id;
         this.patientId = patientId;
         this.textNote = textNote;
@@ -56,11 +57,11 @@ public class Note {
         this.textNote = textNote;
     }
 
-    public Date getDateNote() {
+    public LocalDate getDateNote() {
         return dateNote;
     }
 
-    public void setDateNote(Date dateNote) {
+    public void setDateNote(LocalDate dateNote) {
         this.dateNote = dateNote;
     }
 
