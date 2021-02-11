@@ -21,6 +21,11 @@ public class NotesController {
     @Autowired
     private NoteService noteService;
     /*---------------------------  GET all notes -----------------------------*/
+
+    /**
+     * Find all notes in data base
+     * @return list of notes
+     */
     @GetMapping(value = "patHistories")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getAllNotes()  {
@@ -29,6 +34,13 @@ public class NotesController {
     }
 
     /*---------------------------  GET note by id note -----------------------------*/
+
+    /**
+     * GET note by id note
+     * @param id note id
+     * @return note
+     * @throws NoteIdNotFoundException Error if note id doesn't exist
+     */
     @GetMapping(value = "patHistory/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Note getNoteById(@PathVariable String id) throws NoteIdNotFoundException {
@@ -46,6 +58,13 @@ public class NotesController {
     }
 
     /*---------------------------  GET note by patient id -----------------------------*/
+
+    /**
+     * GET note by patient id
+     * @param patientId patient id
+     * @return list of note
+     * @throws NoteIdNotFoundException Error if patient id doesn't exist
+     */
     @GetMapping(value = "patientpatHistories/{patientId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Note> getNoteByPatientId(@PathVariable Long patientId) throws NoteIdNotFoundException {
@@ -63,6 +82,13 @@ public class NotesController {
     }
 
     /*---------------------------  POST note -----------------------------*/
+
+    /**
+     * Add a note
+     * @param note note to be added. noteId must be null
+     * @return message with noteId
+     * @throws NoteCanNotbeAddedException Error if not added
+     */
     @PostMapping(value = "patHistory/add")
     @ResponseStatus(HttpStatus.CREATED)
     public String addNote(@RequestBody Note note) throws NoteCanNotbeAddedException {
@@ -88,6 +114,13 @@ public class NotesController {
     }
 
     /*---------------------------  PUT note -----------------------------*/
+
+    /**
+     * Update a note
+     * @param note note to be updated
+     * @return message with noteId updated
+     * @throws NoteCanNotBeSavedException Error if update is incorrect
+     */
     @PutMapping(value = "patHistory")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public String saveNote(@RequestBody Note note) throws NoteCanNotBeSavedException {
@@ -113,6 +146,13 @@ public class NotesController {
     }
 
     /*---------------------------  DELETE note -----------------------------*/
+
+    /**
+     * Delete a note
+     * @param note note to be deleted
+     * @return message with noteId delete
+     * @throws NoteCanNotBeDeletedException Error if delete is impossible
+     */
     @DeleteMapping(value = "patHistory")
     @ResponseStatus(HttpStatus.OK)
     public String deleteNote(@RequestBody Note note) throws NoteCanNotBeDeletedException {

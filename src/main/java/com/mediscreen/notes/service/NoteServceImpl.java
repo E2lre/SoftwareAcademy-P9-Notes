@@ -19,7 +19,8 @@ public class NoteServceImpl implements NoteService {
 
     @Override
     public List<Note> findAllNotes() {
-        return noteDao.findAll();
+        List<Note> resulListNote = noteDao.findAll();
+        return resulListNote;
     }
 
     @Override
