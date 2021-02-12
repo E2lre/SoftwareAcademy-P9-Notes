@@ -75,12 +75,7 @@ public class NoteControllerIT {
         //Given
 
         //WHEN THEN
-/*
-        MvcResult result = mockMvc.perform(get("/patHistories"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-*/
+
         //String id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(get("/patHistories"))
                 .andDo(print())
