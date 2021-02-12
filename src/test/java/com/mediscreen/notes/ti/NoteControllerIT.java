@@ -123,6 +123,7 @@ public class NoteControllerIT {
     }
 
     /*---------------------------  POST note -----------------------------*/
+  /* Transformé en TU
     @Test
     public void addNote_newNoteToInsert_noteIsDone() throws Exception {
         //Given
@@ -158,6 +159,7 @@ public class NoteControllerIT {
                 .andExpect(status().isNotModified());
 
     }
+*/
     /*---------------------------  PUT note -----------------------------*/
     @Test
     public void updateNote_existingNoteAndPatient_noteIsUpdated() throws Exception {

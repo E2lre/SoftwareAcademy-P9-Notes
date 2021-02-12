@@ -5,6 +5,8 @@ import com.mediscreen.notes.controller.exception.NoteCanNotBeSavedException;
 import com.mediscreen.notes.controller.exception.NoteCanNotbeAddedException;
 import com.mediscreen.notes.controller.exception.NoteIdNotFoundException;
 import com.mediscreen.notes.model.Note;
+import com.mediscreen.notes.model.external.Patient;
+import com.mediscreen.notes.proxies.PatientProxy;
 import com.mediscreen.notes.service.NoteService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +22,9 @@ public class NotesController {
     private static final Logger logger = LogManager.getLogger(NotesController.class);
     @Autowired
     private NoteService noteService;
+
+    @Autowired
+    private PatientProxy patientProxy;
     /*---------------------------  GET all notes -----------------------------*/
 
     /**
@@ -95,17 +100,35 @@ public class NotesController {
         String finalResult = null;
         String errorMessage = null;
         logger.info("addNote start");
-        if (note.getId()==null) {
-            Note result = noteService.addWithPatientId(note);
-            //TODO ajouter les controles
-            if (result != null) {
-                finalResult = "The note id " + result.getId() + " for the patientId " + result.getPatientId().toString() + " has been created";
+
+        //check if patient ID exist
+        try {
+            if (note.getPatientId() != null ) {
+                Patient patient=patientProxy.getPatientById(note.getPatientId());
+                if (patient != null){
+                    if (note.getId()==null) {
+                        Note result = noteService.addWithPatientId(note);
+                        if (result != null) {
+                            finalResult = "The note id " + result.getId() + " for the patientId " + result.getPatientId().toString() + " has been created";
+                        } else {
+                            errorMessage = "The note for patient " + note.getPatientId().toString() + " not created for the text " + note.getTextNote();
+                        }
+                    } else {
+                        errorMessage = "id is autogenerate, don't give a value for adding in data base";
+                    }
+                } else {
+                    errorMessage = "patient id" + note.getPatientId() + "doesn't exist";
+                }
             } else {
-                errorMessage = "The note for patient " + note.getPatientId().toString() + " not created for the text " + note.getTextNote();
+                errorMessage = "patient id must not be null";
             }
-        } else {
-            errorMessage = "id is autogenerate, don't give a value for adding in data base";
+        } catch (Exception e) {
+            errorMessage = "Error to get patient id" + note.getPatientId() ;
+            logger.error(errorMessage);
+            throw new NoteCanNotbeAddedException(errorMessage);
         }
+
+
         if (finalResult ==null) {
             logger.error(errorMessage);
             throw new NoteCanNotbeAddedException(errorMessage);

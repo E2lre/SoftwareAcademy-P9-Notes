@@ -1,0 +1,45 @@
+---Creation de l'admin
+-- Lancer MongoD
+-- depuis MONGO : 
+
+use admin
+db.createUser(
+  {
+    user: "root",
+    pwd: passwordPrompt(), // or cleartext password
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+)
+
+db.adminCommand( { shutdown: 1 } )
+
+mongo --port 27017  --authenticationDatabase "admin" -u "root" -p
+
+
+---Creation de la base de prod
+-- Lancer MongoD
+-- depuis MONGO : 
+
+use mydatabase
+
+db.createUser(
+  {
+    user: "mediscreen",
+    pwd:  passwordPrompt(),   // or cleartext password
+    roles: [ { role: "readWrite", db: "mydatabase" } ]
+  }
+)
+
+---Creation de la base de test
+use mydatabasetest
+
+db.createUser(
+  {
+    user: "mediscreen",
+    pwd:  passwordPrompt(),   // or cleartext password
+    roles: [ { role: "readWrite", db: "mydatabasetest" } ]
+  }
+)
+
+--Arreter mongo et mongod
+Lancer : mongod --auth

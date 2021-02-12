@@ -1,5 +1,6 @@
 package com.mediscreen.notes.tu;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mediscreen.notes.dao.NoteDao;
 import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.service.NoteService;
@@ -201,4 +202,6 @@ public class NoteServiceTest {
         //THEN
         assertThat(result).isFalse();
     }
+
+
 }
