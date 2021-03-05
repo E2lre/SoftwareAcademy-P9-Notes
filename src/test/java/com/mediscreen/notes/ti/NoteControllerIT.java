@@ -28,6 +28,7 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -121,45 +122,36 @@ public class NoteControllerIT {
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
-
-    /*---------------------------  POST note -----------------------------*/
-  /* Transformé en TU
+    /*---------------------------  GET score by patient id And trigger -----------------------------*/
     @Test
-    public void addNote_newNoteToInsert_noteIsDone() throws Exception {
+    public void getScoreByPatientIdAndTriggers_existingPatientIdWith1Risk_1IsDone() throws Exception {
         //Given
-        //NoteDto noteTemp = new NoteDto(notePatientIdConst,noteTextConst,noteLocalDateConst);
-        //NoteDto noteTemp = new NoteDto();
-        Note noteTemp = new Note();
-        noteTemp.setPatientId(notePatientIdConst);
-        noteTemp.setTextNote(noteTextConst);
+        List<String> triggers = new ArrayList<>();
+        triggers.add(noteTextConst);
         //WHEN THEN
-        mockMvc.perform(post("/patHistory/add")
-                .content(asJsonString(noteTemp))
+        mockMvc.perform(get("/patHistories/triggers/"+notePatientIdConst)
+                .content(asJsonString(triggers))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isCreated());
-
+                .andExpect(status().isOk())
+                .andExpect(content().string("1"));
     }
     @Test
-    public void addNote_incorrectNoteToInsert_noteIsDone() throws Exception {
+    public void getScoreByPatientIdAndTriggers_inexistingPatientId_zeroIsDone() throws Exception {
         //Given
-        //NoteDto noteTemp = new NoteDto(notePatientIdConst,noteTextConst,noteLocalDateConst);
-        //NoteDto noteTemp = new NoteDto();
-        Note noteTemp = new Note();
-        noteTemp.setId(noteIdConst);
-        noteTemp.setPatientId(notePatientIdConst);
-        noteTemp.setTextNote(noteTextConst);
+            List<String> triggers = new ArrayList<>();
+            triggers.add(noteTextConst);
         //WHEN THEN
-        mockMvc.perform(post("/patHistory/add")
-                .content(asJsonString(noteTemp))
+        mockMvc.perform(get("/patHistories/triggers/99")
+                .content(asJsonString(triggers))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isNotModified());
-
+                .andExpect(status().isOk())
+                .andExpect(content().string("0"));
     }
-*/
+
     /*---------------------------  PUT note -----------------------------*/
     @Test
     public void updateNote_existingNoteAndPatient_noteIsUpdated() throws Exception {

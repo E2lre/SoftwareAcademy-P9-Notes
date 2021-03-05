@@ -37,6 +37,7 @@ public class NoteServiceTest {
     String noteIdConst = "abc123";
     Long notePatientIdConst = 123l;
     String noteTextConst = "AZERTYIOP";
+    String noteTextConst2 = "QWERTYIOP";
     LocalDate noteDate;
     String inexistingNoteIdConst = "zzz999";
     Long incorrectNotePatientIdConst = 999l;
@@ -69,7 +70,8 @@ public class NoteServiceTest {
         //THEN
         assertThat(noteResultList).isNotEmpty();
     }
-    /*------------------------ findNoteById ---------------------------------*/
+
+
     @Test
     public void findNoteById_existingNoteId_noteIsReturn(){
         //GIVEN
@@ -115,6 +117,52 @@ public class NoteServiceTest {
         List<Note> noteListResult =  noteService.findNoteByPatientId(notePatientIdConst);
         //THEN
         assertThat(noteListResult).isNull();
+    }
+    /*------------------------ getScoreByTriggers ---------------------------------*/
+    @Test
+    public void getScoreByTriggers_existingPatientId2Risk_2IsReturn(){
+        //GIVEN
+        List<String> triggers = new ArrayList<>();
+        triggers.add(noteTextConst);
+        triggers.add(noteTextConst2);
+        List<Note> noteList = new ArrayList<>();
+        noteList.add(note);
+        Mockito.when(noteDao.findNotesByTextNoteContainsIgnoreCaseAndPatientId(anyString(),anyLong())).thenReturn(noteList);
+
+        //WHEN
+        int result =  noteService.getScoreByTriggers(notePatientIdConst,triggers);
+        //THEN
+        assertThat(result).isEqualTo(2);
+    }
+    @Test
+    public void getScoreByTriggers_existingPatientIdNoRiskFound_0IsReturn(){
+        //GIVEN
+        List<String> triggers = new ArrayList<>();
+        triggers.add(noteTextConst);
+        triggers.add(noteTextConst2);
+        List<Note> noteList = new ArrayList<>();
+
+        Mockito.when(noteDao.findNotesByTextNoteContainsIgnoreCaseAndPatientId(anyString(),anyLong())).thenReturn(noteList);
+
+        //WHEN
+        int result =  noteService.getScoreByTriggers(notePatientIdConst,triggers);
+        //THEN
+        assertThat(result).isEqualTo(0);
+    }
+    @Test
+    public void getScoreByTriggers_inexistingPatientId2Risk_0IsReturn(){
+        //GIVEN
+        List<String> triggers = new ArrayList<>();
+        triggers.add(noteTextConst);
+        triggers.add(noteTextConst2);
+        List<Note> noteList = new ArrayList<>();
+
+        Mockito.when(noteDao.findNotesByTextNoteContainsIgnoreCaseAndPatientId(anyString(),anyLong())).thenReturn(noteList);
+
+        //WHEN
+        int result =  noteService.getScoreByTriggers(notePatientIdConst,triggers);
+        //THEN
+        assertThat(result).isEqualTo(0);
     }
     /*------------------------ addWithPatientId ---------------------------------*/
     @Test

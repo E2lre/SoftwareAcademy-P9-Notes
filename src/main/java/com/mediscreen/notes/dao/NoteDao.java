@@ -9,5 +9,7 @@ public interface NoteDao extends MongoRepository<Note, String> {
 
     Note findNoteById (String id);
     List<Note> findNoteByPatientId (Long patientId);
+    List<Note> findNotesByTextNoteContainsIgnoreCaseAndPatientId (String trigger, long patientId);
+
 
 }

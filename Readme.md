@@ -13,7 +13,7 @@ Execute mongod.exe
 # Manual application start
 ## Environement start
 * Start Zipkin in zipkin directory : java -jar zipkin-server-2.23.2-exec.jar
-* Start MongDb in mongodb directory : C:\"Program Files"\MongoDB\Server\4.4\bin\mongod
+* Start MongDb in mongodb directory : C:\"Program Files"\MongoDB\Server\4.4\bin\mongod --auth
 * Start Eureka microservice
 * Start Config server microservice
 * Start spring admin  microservice

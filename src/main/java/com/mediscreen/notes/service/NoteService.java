@@ -18,6 +18,10 @@ public interface NoteService {
      */
     public Note findNoteById(String id);
 
+    //TODO JAVADOC
+
+    public int getScoreByTriggers(long patientId, List<String> triggers);
+
     /**
      * Find a list of note for a patient
      * @param patientId patient id to get the list of notes
