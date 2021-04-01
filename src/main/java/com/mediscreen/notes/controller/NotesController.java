@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -87,9 +86,13 @@ public class NotesController {
         return finalResult;
     }
     /*---------------------------  GET score not by trigger list -----------------------------*/
-//TODO javadoc + controle sur patientID + exception
 
-    //@GetMapping(value = "patHistories/triggers/{patientId}")
+    /**
+     * Return health score with trigger list
+     * @param patientId patient id to score
+     * @param triggers trigger list with trigger words
+     * @return score betewwen 0 and 5.
+     */
     @RequestMapping(value = "patHistories/triggers/{patientId}")
     @ResponseStatus(HttpStatus.OK)
     public int getScoreByPatientIdAndTriggers(@PathVariable Long patientId,@RequestBody List<String> triggers) {

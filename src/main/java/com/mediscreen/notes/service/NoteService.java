@@ -18,8 +18,13 @@ public interface NoteService {
      */
     public Note findNoteById(String id);
 
-    //TODO JAVADOC
 
+    /**
+     * Score calculation with list of trigger words
+     * @param patientId patient id
+     * @param triggers trigger lit of specific words
+     * @return score
+     */
     public int getScoreByTriggers(long patientId, List<String> triggers);
 
     /**

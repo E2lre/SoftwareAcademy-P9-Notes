@@ -1,7 +1,6 @@
 package com.mediscreen.notes.tu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mediscreen.notes.dao.NoteDao;
 import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.model.external.Patient;
 import com.mediscreen.notes.proxies.PatientProxy;
@@ -47,19 +46,13 @@ public class NoteControllerTest {
     Long notePatientIdConst = 123l;
     String noteTextConst = "AZERTYIOP";
     LocalDate noteDate;
-    String inexistingNoteIdConst = "zzz999";
-    Long incorrectNotePatientIdConst = 999l;
-
-
 
     @BeforeEach
     public void setUpEach() {
         note = new Note();
-       // note.setId(noteIdConst);
         note.setPatientId(notePatientIdConst);
         note.setTextNote(noteTextConst);
         noteDate = LocalDate.now();
-        //note.setDateNote(noteDate);
 
         patient = new Patient();
         patient.setId(notePatientIdConst);

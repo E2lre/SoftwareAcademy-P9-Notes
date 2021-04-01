@@ -1,8 +1,6 @@
 package com.mediscreen.notes.ti;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import com.mediscreen.notes.dao.NoteDao;
 import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.service.NoteService;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-//@DataMongoTest
 public class NoteControllerIT {
     private static final Logger logger = LogManager.getLogger(NoteControllerIT.class);
     @Autowired
@@ -45,7 +40,7 @@ public class NoteControllerIT {
     private NoteService noteService;
 
     private Note note;
-    private List<Note> noteList;// = new ArrayList<>();
+    private List<Note> noteList;
 
 
     String noteIdConst = "abc123";
@@ -77,7 +72,6 @@ public class NoteControllerIT {
 
         //WHEN THEN
 
-        //String id = JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(get("/patHistories"))
                 .andDo(print())
                 .andExpect(status().isOk());

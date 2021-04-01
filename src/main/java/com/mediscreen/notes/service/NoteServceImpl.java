@@ -1,18 +1,13 @@
 package com.mediscreen.notes.service;
 
-import com.mediscreen.notes.controller.NotesController;
 import com.mediscreen.notes.dao.NoteDao;
 import com.mediscreen.notes.model.Note;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +16,6 @@ public class NoteServceImpl implements NoteService {
     @Autowired
     private NoteDao noteDao;
 
-    @Autowired
-    private MongoOperations mongoOperations;
 
     @Override
     public List<Note> findAllNotes() {
@@ -52,13 +45,11 @@ public class NoteServceImpl implements NoteService {
 
     @Override
     public Note addWithPatientId(Note note) {
-        //TODO Ajouter les controles
+        //L'existance du patient est faite dans le controler
         Note noteToInsert = new Note();
-        //noteToInsert.setDateNote(note.getDateNote()); //DateNote is current day
         noteToInsert.setDateNote(LocalDate.now()); // Date is the corrent day, input value is ignored
         noteToInsert.setPatientId(note.getPatientId());
         noteToInsert.setTextNote(note.getTextNote());
-        //return noteDao.insert(note);
         return noteDao.insert(noteToInsert);
     }
 

@@ -56,8 +56,6 @@ public class NoteServiceTest {
 
     /*------------------------ findAll ---------------------------------*/
 
-    //@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    //@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
     public void findAllNotes_WhenDBISNotEmpty_NoteLisIsReturn(){
         //GIVEN
