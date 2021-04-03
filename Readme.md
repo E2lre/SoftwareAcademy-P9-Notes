@@ -1,46 +1,93 @@
 # SoftwareAcademy-P9-Notes
-Micro-service NOTES manage the praticiens notes for patients
+Micro-service NOTES manage the praticiens notes for patients on MEDISCREEN Application. 
+
+This microservice use SPRINT BOOT, Feign Client. 
+
+## Getting Started
+EndPoint for global application  : 
+* http://localhost:4200
+
+# Prerequis
+For NOTES microservice
+* Java 1.8 or later
+* Spring Boot 2.2.6
+* MongoDB
+* Docker 2.5.0.0 or later (optional)
+
+For Global application
+* Java 1.8 or later
+* MySQL
+* MongoDB
+* Spring Boot 2.2.6
+* Docker 2.5.0.0 or later (optional)
+* Angular
+* Zipkin
+* Eureka
+* Config server
 
 ## Installation
+Check PatientV2 Readme.md for global installation 
 
-### Database installation
-* execute ???????? file
-
-### DATA BASE STARTER
-Go to dectory  C:\"Program Files"\MongoDB\Server\4.4\bin\
-Execute mongod.exe
-
-# Manual application start
-## Environement start
-* Start Zipkin in zipkin directory : java -jar zipkin-server-2.23.2-exec.jar
-* Start MongDb in mongodb directory : C:\"Program Files"\MongoDB\Server\4.4\bin\mongod --auth
-* Start Eureka microservice
-* Start Config server microservice
-* Start spring admin  microservice
-* Start zuul microservice
-## Application start
-* Start user microservice
-* Start patientV2 microservice
-* Start note microservice
-* Start Mediscreen IHM : ng serve
-
-# Docker application start
 ### Docker image construction in project directory :
-
 docker build --build-arg JAR_FILE=target/*.jar -t p9-notes .
 
-### Docker execution :
+### Docker execution if docker-compose is not use
+docker run -p 8085:8085 --name notes p9-notes
 
-docker run -p 9105:9105 --name Notes p9-notes
+### Database installation
+On MongoDB
+* create the database "mydatabase"
+* create the user "mediscreen" with readWrite option
+* create the collection "note"
 
-execute command line to start all components: docker-compose up -d
+## URI
+### Get all notes in database
+* directly : GET http://localhost:8085/patHistories
+* With zuul : GET http://zuul:9004/microservice-notes/patHistories
 
+### Get one note by note id
+* directly : GET http://localhost:8085/patHistory/id_de_note
+* With zuul : GET http://zuul:9004/microservice-notes/patHistory/id_de_note
 
-### divers
+### Get note list for a patient id
+* directly : GET http://localhost:8085/patientpatHistories/id_de_patient
+* With zuul : GET http://zuul:9004/microservice-notes/patientpatHistories/id_de_patient
 
-### lancement de zipkin 
-* depuis le répertoire de zipkin : java -jar zipkin-server-2.6.1-exec.jar
-* lancer : http://localhost:9411 
+### Add a note list for a patient id
+* directly : POST http://localhost:8085/patHistory/add
+* With zuul : POST http://zuul:9004//microservice-notes/patHistory/add
 
+Body exemple :
+{   
+    "patientId": "2",
+    "textNote": "Blabla ",
+    "dateNote": "1966-12-30"
+}
 
-C:\"Program Files"\MongoDB\Server\4.4\bin\mongod
+### Update a note list for a patient id
+* directly : PUT http://localhost:8085/patHistory/
+* With zuul : PUT http://zuul:9004//microservice-notes/patHistory/
+
+Body exemple :
+{   
+    id": "60227a4171603d6e9bacf540",
+    "patientId": "2",
+    "textNote": "Blabla ",
+    "dateNote": "1966-12-30"
+}
+
+### delete a note list for a patient id
+* directly : DEL http://localhost:8085/patHistory/
+* With zuul : DEL http://zuul:9004//microservice-notes/patHistory/
+
+Body exemple :
+{   
+    id": "60227a4171603d6e9bacf540",
+    "patientId": "2",
+    "textNote": "Blabla ",
+    "dateNote": "1966-12-30"
+}
+
+## Divers
+Global architecture : 
+![alt text](Architecture.png)
