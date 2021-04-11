@@ -76,7 +76,7 @@ Body exemple :
     "dateNote": "1966-12-30"
 }
 
-### delete a note list for a patient id
+### Delete a note list for a patient id
 * directly : DEL http://localhost:8085/patHistory/
 * With zuul : DEL http://zuul:9004//microservice-notes/patHistory/
 
